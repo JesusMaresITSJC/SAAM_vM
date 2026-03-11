@@ -37,6 +37,13 @@ class RegisterActivity : AppCompatActivity() {
         btnRegistrar.setOnClickListener {
             registrarUsuario()
         }
+        val txtLogin = findViewById<TextView>(R.id.volverLogin)
+
+        txtLogin.setOnClickListener {
+
+            finish()
+
+        }
     }
 
     private fun registrarUsuario() {
