@@ -15,6 +15,11 @@
         android:theme="@style/Theme.SAAM"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".RegistrosActivity"
+            android:exported="false"
+            android:label="@string/title_activity_registros"
+            android:theme="@style/Theme.SAAM" />
+        <activity
             android:name=".MainActivity"
             android:exported="false"
             android:label="@string/title_activity_main"

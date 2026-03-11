@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var txtAlert: TextView
     private lateinit var btnGuardar: Button
     private lateinit var btnAlerta: Button
+    private lateinit var btnRegistros: Button
     private lateinit var btnCerrarSesion: Button
 
     private val handler = Handler(Looper.getMainLooper())
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         txtAlert = findViewById(R.id.txtAlert)
         btnGuardar = findViewById(R.id.btnGuardar)
         btnAlerta = findViewById(R.id.btnAlerta)
+        btnRegistros = findViewById(R.id.btnRegistros)
         btnCerrarSesion = findViewById(R.id.btnLogout)
 
         // Simular RPM en tiempo real
@@ -105,6 +107,13 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+        // Botón Ver Registros
+        btnRegistros.setOnClickListener {
+
+            val intent = Intent(this, RegistrosActivity::class.java)
+            startActivity(intent)
+        }
+
         // Botón cerrar sesión
         btnCerrarSesion.setOnClickListener {
 
@@ -114,6 +123,7 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
+
 
     // Simulación de RPM en tiempo real
     private fun actualizarRPM() {
