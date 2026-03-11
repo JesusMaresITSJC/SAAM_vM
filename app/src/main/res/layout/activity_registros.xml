@@ -7,13 +7,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:text="Historial de Datos"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:padding="16dp"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarRegistros"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:background="#1e5aa8"
+        android:titleTextColor="#FFFFFF"
+        app:navigationIcon="@drawable/arrow_left"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerRegistros"

@@ -9,8 +9,10 @@ import com.itsjc.saam.models.DatosRequest
 import com.itsjc.saam.models.Registro
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface ApiService {
 
@@ -34,4 +36,9 @@ interface ApiService {
 
     @GET("api/registros")
     fun obtenerRegistros(): Call<List<Registro>>
+
+    @DELETE("api/registros/{id}")
+    fun eliminarRegistro(
+        @Path("id") id: Int
+    ): Call<Void>
 }
