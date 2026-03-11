@@ -4,6 +4,8 @@ import com.itsjc.saam.models.LoginRequest
 import com.itsjc.saam.models.LoginResponse
 import com.itsjc.saam.models.RegisterRequest
 import com.itsjc.saam.models.RegisterResponse
+import com.itsjc.saam.models.GenericResponse
+import com.itsjc.saam.models.DatosRequest
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -19,5 +21,13 @@ interface ApiService {
     fun register(
         @Body request: RegisterRequest
     ): Call<RegisterResponse>
+
+    @POST("api/datos")
+    fun recibirDatos(
+        @Body datos: DatosRequest
+    ): Call<GenericResponse>
+
+    @POST("api/guardar")
+    fun guardarRegistro(): Call<GenericResponse>
 
 }

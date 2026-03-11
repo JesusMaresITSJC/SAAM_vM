@@ -9,6 +9,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlin.random.Random
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import com.itsjc.saam.models.GenericResponse
+import com.itsjc.saam.network.RetrofitClient
+import com.itsjc.saam.models.DatosRequest
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,10 +40,61 @@ class MainActivity : AppCompatActivity() {
         // Simular RPM en tiempo real
         actualizarRPM()
 
-        // Botón guardar datos
+        //boton guardar registro
         btnGuardar.setOnClickListener {
+            //txtAlert.text = "BOTON PRESIONADO"
 
-            Toast.makeText(this, "Datos guardados correctamente", Toast.LENGTH_SHORT).show()
+            // 1️⃣ Primero enviar datos al servidor
+            val datos = DatosRequest(
+                dispositivo_id = 1,
+                latitud = 16.1234,
+                longitud = -95.1234,
+                bateria = 80,
+                alerta = 0
+            )
+
+            RetrofitClient.apiService.recibirDatos(datos)
+                .enqueue(object : Callback<GenericResponse> {
+
+                    override fun onResponse(
+                        call: Call<GenericResponse>,
+                        response: Response<GenericResponse>
+                    ) {
+
+                        if (response.isSuccessful) {
+
+                            val result = response.body()
+
+                            if (result?.success == true) {
+
+                                // 2️⃣ Después guardar registro
+                                guardarRegistro()
+
+                            } else {
+
+                                Toast.makeText(
+                                    this@MainActivity,
+                                    "No se pudieron enviar los datos",
+                                    Toast.LENGTH_LONG
+                                ).show()
+
+                            }
+
+                        }
+
+                    }
+
+                    override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
+
+                        Toast.makeText(
+                            this@MainActivity,
+                            "Error al enviar datos",
+                            Toast.LENGTH_LONG
+                        ).show()
+
+                    }
+
+                })
 
         }
 
@@ -78,5 +135,55 @@ class MainActivity : AppCompatActivity() {
                 handler.postDelayed(this, 3000)
             }
         }, 3000)
+    }
+
+    private fun guardarRegistro() {
+
+        RetrofitClient.apiService.guardarRegistro()
+            .enqueue(object : Callback<GenericResponse> {
+
+                override fun onResponse(
+                    call: Call<GenericResponse>,
+                    response: Response<GenericResponse>
+                ) {
+
+                    if (response.isSuccessful) {
+
+                        val result = response.body()
+
+                        if (result?.success == true) {
+
+                            Toast.makeText(
+                                this@MainActivity,
+                                "Registro guardado correctamente",
+                                Toast.LENGTH_LONG
+                            ).show()
+
+                        } else {
+
+                            Toast.makeText(
+                                this@MainActivity,
+                                result?.message ?: "No se pudo guardar",
+                                Toast.LENGTH_LONG
+                            ).show()
+
+                        }
+
+                    }
+
+                }
+
+                override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
+
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Error de conexión",
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                }
+
+            })
+
     }
 }
