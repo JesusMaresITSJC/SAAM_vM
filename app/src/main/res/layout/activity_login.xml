@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
@@ -61,7 +62,7 @@
                     android:textStyle="bold"/>
 
                 <EditText
-                    android:id="@+id/etEmail"
+                    android:id="@+id/Email"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/txt_editable"
@@ -94,7 +95,7 @@
                 </LinearLayout>
 
                 <EditText
-                    android:id="@+id/etPassword"
+                    android:id="@+id/Password"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/txt_editable"
