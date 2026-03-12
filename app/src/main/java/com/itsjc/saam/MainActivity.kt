@@ -103,7 +103,45 @@ class MainActivity : AppCompatActivity() {
         // Botón enviar alerta
         btnAlerta.setOnClickListener {
 
-            Toast.makeText(this, "Alerta enviada", Toast.LENGTH_SHORT).show()
+            val datos = DatosRequest(
+                dispositivo_id = 1,
+                latitud = 0.0,
+                longitud = 0.0,
+                bateria = 0,
+                alerta = 1
+            )
+
+            RetrofitClient.apiService.recibirDatos(datos)
+                .enqueue(object : Callback<GenericResponse> {
+
+                    override fun onResponse(
+                        call: Call<GenericResponse>,
+                        response: Response<GenericResponse>
+                    ) {
+
+
+                        if (response.isSuccessful) {
+                            Toast.makeText(
+                                this@MainActivity,
+                                "🚨 Alerta enviada",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            txtAlert.text = "Alerta Enviada"
+                        }
+
+                    }
+
+                    override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
+
+                        Toast.makeText(
+                            this@MainActivity,
+                            "Error enviando alerta",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                    }
+
+                })
 
         }
 
@@ -131,12 +169,12 @@ class MainActivity : AppCompatActivity() {
         handler.postDelayed(object : Runnable {
             override fun run() {
 
-                val rpm = Random.nextInt(500, 5000)
+                val rpm = Random.nextInt(60, 180)
 
                 txtRPM.text = "$rpm RPM"
 
                 // Verificar alerta
-                if (rpm > 3000) {
+                if (rpm > 100) {
                     txtAlert.text = "⚠ RPM MUY ALTAS"
                 } else {
                     txtAlert.text = "Todo normal"
